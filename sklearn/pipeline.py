@@ -241,7 +241,7 @@ class Pipeline(BaseEstimator):
         return self.steps[-1][-1].predict_proba(Xt)
 
     @if_delegate_has_method(delegate='_final_estimator')
-    def decision_function(self, X):
+    def decision_function(self, X, **kwargs):
         """Applies transforms to the data, and the decision_function method of
         the final estimator. Valid only if the final estimator implements
         decision_function.
@@ -255,7 +255,7 @@ class Pipeline(BaseEstimator):
         Xt = X
         for name, transform in self.steps[:-1]:
             Xt = transform.transform(Xt)
-        return self.steps[-1][-1].decision_function(Xt)
+        return self.steps[-1][-1].decision_function(Xt, **kwargs)
 
     @if_delegate_has_method(delegate='_final_estimator')
     def predict_log_proba(self, X):
